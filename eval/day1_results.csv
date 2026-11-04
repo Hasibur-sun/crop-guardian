@@ -1,0 +1,13 @@
+file,status,is_plant,crop,top1,conf,quality
+blurry_1.jpg,OK,True,other,Powdery mildew,0.45,good
+brinjal_1.jpg,OK,True,brinjal,Healthy,0.85,good
+field_messy_1.jpg,OK,True,other,Unknown,0.4,other
+not_plant.jpg,OK,False,unknown,-,0,other
+potato_early_blight_1.jpg,OK,True,potato,Early blight,0.65,good
+potato_healthy_1.jpg,OK,True,potato,Healthy,0.88,good
+potato_late_blight_1.jpg,OK,True,potato,Late blight,0.85,good
+rice_blast_1.jpg,OK,True,rice,Blast,0.85,good
+rice_brown_spot_1.jpg,OK,True,rice,Blast,0.82,good
+tomato_early_blight_1.jpg,OK,True,tomato,Early blight,0.85,good
+tomato_healthy_1.jpg,OK,True,tomato,Healthy,0.88,good
+tomato_leaf_mold_1.jpg,OK,True,tomato,Leaf mold,0.8,good

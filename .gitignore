@@ -1,0 +1,19 @@
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
+
+# API keys and secrets
+.env
+.env.*
+
+# Cache files
+cache/
+
+# VS Code settings
+.vscode/
+
+# Temporary files
+*.log
+# Test images (keep locally)
+test_images/
