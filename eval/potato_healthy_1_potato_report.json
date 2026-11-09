@@ -1,0 +1,69 @@
+{
+  "project": "Crop Guardian",
+  "image": "potato_healthy_1.jpg",
+  "selected_crop": "potato",
+  "diagnosis": {
+    "image": "potato_healthy_1.jpg",
+    "selected_crop": "potato",
+    "hybrid_status": "model_disagreement",
+    "crop_agreement": true,
+    "disease_agreement": true,
+    "needs_review": true,
+    "model_predictions": [
+      {
+        "source_model": "EfficientNet-B0",
+        "crop": "potato",
+        "disease": "healthy",
+        "model_score": 0.0538
+      },
+      {
+        "source_model": "Gemini",
+        "crop": "potato",
+        "disease": "Healthy",
+        "model_score": 0.88
+      }
+    ],
+    "knowledge_retrieval": [],
+    "farmer_guidance_allowed": false,
+    "final_message": "Both models predicted that the plant is healthy. However, the EfficientNet global crop prediction disagrees with the selected crop. The result is not independently confirmed. No disease-specific knowledge search was performed. Please seek agriculture officer confirmation if symptoms are present.",
+    "warnings": [
+      "EfficientNet global crop prediction disagrees with farmer-selected crop.",
+      "No disease knowledge search performed for prediction: healthy",
+      "No disease knowledge search performed for prediction: Healthy"
+    ]
+  },
+  "weather_intelligence": {
+    "data_source": "NASA POWER",
+    "location": {
+      "latitude": 23.8103,
+      "longitude": 90.4125,
+      "timezone": "Asia/Dhaka"
+    },
+    "crop_weather_context": [
+      {
+        "crop": "potato",
+        "disease": "Late blight",
+        "assessment": "limited_favorable_indicators",
+        "alert_level": "NO_STRONG_SIGNAL",
+        "message_en": "The selected late blight weather indicators were limited during the observation period. Continue monitoring.",
+        "message_bn": "পর্যবেক্ষণের সময়ে লেট ব্লাইটের নির্বাচিত আবহাওয়াগত সংকেত সীমিত ছিল। ফসল নিয়মিত পর্যবেক্ষণ করুন।",
+        "requires_field_inspection": false,
+        "treatment_recommendation": null,
+        "source": "Bangladesh Agro-Meteorological Information Service (BAMIS), DAE",
+        "source_url": "https://www.bamis.gov.bd/en/diseases/1/all/52/",
+        "generated_at_utc": "2026-11-09T12:46:13.551390+00:00",
+        "disclaimer": "Weather indicators do not confirm the presence of disease."
+      }
+    ],
+    "disease_specific_matches": [],
+    "weather_disease_match_found": false
+  },
+  "safety": {
+    "image_diagnosis_is_confirmed": false,
+    "weather_confirms_disease": false,
+    "weather_location_is_farm_verified": false,
+    "farmer_guidance_allowed": false,
+    "human_review_required": true,
+    "disclaimer": "Weather indicators do not confirm disease infection. NASA POWER provides gridded weather estimates. The configured Dhaka coordinates may not represent the farmer's actual field. Consult an agricultural officer when symptoms or uncertainty are present."
+  }
+}

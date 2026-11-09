@@ -1,0 +1,102 @@
+{
+  "crop": "potato",
+  "disease": "Late blight",
+  "location": {
+    "latitude": 23.8103,
+    "longitude": 90.4125,
+    "timezone": "Asia/Dhaka"
+  },
+  "method": "Exploratory Hutton Criteria comparison",
+  "thresholds": {
+    "minimum_temperature_c": 10.0,
+    "relative_humidity_percent": 90.0,
+    "required_hours_per_day": 6,
+    "consecutive_days_required": 2
+  },
+  "complete_days": 7,
+  "daily_results": [
+    {
+      "date": "2026-10-31",
+      "complete": false,
+      "reason": "Incomplete 24-hour weather observations"
+    },
+    {
+      "date": "2026-11-01",
+      "complete": true,
+      "minimum_temperature": 23.64,
+      "hours_rh_above_90": 4,
+      "temperature_condition": true,
+      "humidity_condition": false,
+      "daily_conditions_met": false
+    },
+    {
+      "date": "2026-11-02",
+      "complete": true,
+      "minimum_temperature": 23.21,
+      "hours_rh_above_90": 4,
+      "temperature_condition": true,
+      "humidity_condition": false,
+      "daily_conditions_met": false
+    },
+    {
+      "date": "2026-11-03",
+      "complete": true,
+      "minimum_temperature": 23.1,
+      "hours_rh_above_90": 4,
+      "temperature_condition": true,
+      "humidity_condition": false,
+      "daily_conditions_met": false
+    },
+    {
+      "date": "2026-11-04",
+      "complete": true,
+      "minimum_temperature": 22.0,
+      "hours_rh_above_90": 2,
+      "temperature_condition": true,
+      "humidity_condition": false,
+      "daily_conditions_met": false
+    },
+    {
+      "date": "2026-11-05",
+      "complete": true,
+      "minimum_temperature": 20.29,
+      "hours_rh_above_90": 4,
+      "temperature_condition": true,
+      "humidity_condition": false,
+      "daily_conditions_met": false
+    },
+    {
+      "date": "2026-11-06",
+      "complete": true,
+      "minimum_temperature": 20.77,
+      "hours_rh_above_90": 2,
+      "temperature_condition": true,
+      "humidity_condition": false,
+      "daily_conditions_met": false
+    },
+    {
+      "date": "2026-11-07",
+      "complete": true,
+      "minimum_temperature": 20.29,
+      "hours_rh_above_90": 1,
+      "temperature_condition": true,
+      "humidity_condition": false,
+      "daily_conditions_met": false
+    },
+    {
+      "date": "2026-11-08",
+      "complete": false,
+      "reason": "Incomplete 24-hour weather observations"
+    }
+  ],
+  "qualifying_pairs": [],
+  "benchmark_met": false,
+  "interpretation": "No complete consecutive-day pair met all Hutton benchmark conditions.",
+  "limitations": [
+    "This criterion was developed for Great Britain.",
+    "It is not locally validated for Bangladesh.",
+    "Hourly temperature minimum is a proxy for daily minimum temperature.",
+    "Relative humidity is not a direct leaf-wetness measurement.",
+    "Weather conditions do not confirm pathogen presence."
+  ]
+}

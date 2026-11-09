@@ -1,0 +1,61 @@
+{
+  "location": {
+    "latitude": 23.8103,
+    "longitude": 90.4125,
+    "description": "Dhaka demonstration location"
+  },
+  "data_source": "NASA POWER",
+  "models": [
+    {
+      "crop": "potato",
+      "disease": "Late blight",
+      "assessment": "insufficient_temporal_resolution",
+      "observed_indicators": {
+        "days_available": 7,
+        "average_humidity": 77.39,
+        "rainy_days": 7
+      },
+      "reason": "A validated late blight infection assessment requires hourly temperature and sustained relative humidity or leaf wetness observations. Daily averages cannot establish infection periods.",
+      "source": "UC IPM late blight forecasting references"
+    },
+    {
+      "crop": "tomato",
+      "disease": "Early blight",
+      "assessment": "exploratory_weather_screen",
+      "window_days": 7,
+      "favorable_indicator_days": 7,
+      "dates_with_favorable_indicators": [
+        "20261027",
+        "20261028",
+        "20261029",
+        "20261030",
+        "20261031",
+        "20261101",
+        "20261102"
+      ],
+      "interpretation": "Warm conditions and moisture indicators were observed. This suggests potentially favorable environmental conditions, but does not confirm disease infection.",
+      "limitation": "Daily rainfall and average humidity cannot determine actual leaf wetness duration.",
+      "source": "University of Connecticut Extension and University of Minnesota Extension"
+    },
+    {
+      "crop": "rice",
+      "disease": "Blast",
+      "assessment": "research_conditions_not_met",
+      "research_conditions_met": 2,
+      "total_conditions": 3,
+      "observed_indicators": {
+        "average_temperature": 27.41,
+        "average_minimum_temperature": 22.62,
+        "average_humidity": 74.65,
+        "consecutive_days_humidity_above_85": 0
+      },
+      "conditions": {
+        "minimum_temperature_above_21": true,
+        "average_temperature_above_25_5": true,
+        "humidity_above_85_for_14_days": false
+      },
+      "interpretation": "2 of 3 BRRI research conditions were met. The full research screening condition was not satisfied.",
+      "source": "Bangladesh Rice Research Institute Research Progress 2023-2024"
+    }
+  ]
+}

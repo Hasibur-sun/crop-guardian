@@ -1,0 +1,143 @@
+{
+  "project": "Crop Guardian",
+  "engine": "Bangladesh Weather Screening v1",
+  "location": {
+    "latitude": 23.8103,
+    "longitude": 90.4125,
+    "timezone": "Asia/Dhaka"
+  },
+  "data_source": "NASA POWER",
+  "screening_results": [
+    {
+      "crop": "potato",
+      "disease": "Late blight",
+      "assessment": "limited_favorable_indicators",
+      "complete_days_analyzed": 7,
+      "observed_indicators": {
+        "hours_temperature_16_20": 0,
+        "hours_humidity_above_90": 21,
+        "combined_temperature_humidity_hours": 0,
+        "rainy_hours": 19,
+        "total_rainfall_mm": 2.82
+      },
+      "daily_results": [
+        {
+          "date": "2026-11-01",
+          "minimum_temperature": 23.64,
+          "hours_temperature_16_20": 0,
+          "hours_humidity_above_90": 4,
+          "combined_temperature_humidity_hours": 0,
+          "rainy_hours": 7,
+          "rainfall_mm": 0.41
+        },
+        {
+          "date": "2026-11-02",
+          "minimum_temperature": 23.21,
+          "hours_temperature_16_20": 0,
+          "hours_humidity_above_90": 4,
+          "combined_temperature_humidity_hours": 0,
+          "rainy_hours": 10,
+          "rainfall_mm": 2.39
+        },
+        {
+          "date": "2026-11-03",
+          "minimum_temperature": 23.1,
+          "hours_temperature_16_20": 0,
+          "hours_humidity_above_90": 4,
+          "combined_temperature_humidity_hours": 0,
+          "rainy_hours": 2,
+          "rainfall_mm": 0.02
+        },
+        {
+          "date": "2026-11-04",
+          "minimum_temperature": 22.0,
+          "hours_temperature_16_20": 0,
+          "hours_humidity_above_90": 2,
+          "combined_temperature_humidity_hours": 0,
+          "rainy_hours": 0,
+          "rainfall_mm": 0.0
+        },
+        {
+          "date": "2026-11-05",
+          "minimum_temperature": 20.29,
+          "hours_temperature_16_20": 0,
+          "hours_humidity_above_90": 4,
+          "combined_temperature_humidity_hours": 0,
+          "rainy_hours": 0,
+          "rainfall_mm": 0.0
+        },
+        {
+          "date": "2026-11-06",
+          "minimum_temperature": 20.77,
+          "hours_temperature_16_20": 0,
+          "hours_humidity_above_90": 2,
+          "combined_temperature_humidity_hours": 0,
+          "rainy_hours": 0,
+          "rainfall_mm": 0.0
+        },
+        {
+          "date": "2026-11-07",
+          "minimum_temperature": 20.29,
+          "hours_temperature_16_20": 0,
+          "hours_humidity_above_90": 1,
+          "combined_temperature_humidity_hours": 0,
+          "rainy_hours": 0,
+          "rainfall_mm": 0.0
+        }
+      ],
+      "threshold_notes": {
+        "temperature": "16-20 C from BAMIS/DAE.",
+        "humidity": "90% is an experimental project proxy, not a numerical BAMIS threshold.",
+        "rainfall": "Observed rainfall is a moisture indicator, not a direct measurement of fog or leaf wetness."
+      },
+      "source": "Bangladesh Agro-Meteorological Information Service (BAMIS), DAE",
+      "source_url": "https://www.bamis.gov.bd/en/diseases/1/all/52/"
+    },
+    {
+      "crop": "tomato",
+      "disease": "Early blight",
+      "assessment": "weather_context_only",
+      "window_days": 7,
+      "observed_indicators": {
+        "average_temperature": 27.91,
+        "average_humidity": 77.39,
+        "total_rainfall_mm": 21.2,
+        "maximum_humidity": 83.38,
+        "minimum_humidity": 69.95
+      },
+      "interpretation": "Weather observations collected successfully. No locally validated numerical Early blight risk equation is applied.",
+      "source": "BAMIS Bangladesh regional tomato Early blight disease-weather calendars",
+      "source_url": "https://www.bamis.gov.bd/calendar/3/13/132"
+    },
+    {
+      "crop": "rice",
+      "disease": "Blast",
+      "assessment": "research_conditions_not_met",
+      "window_days": 14,
+      "conditions_met": 2,
+      "total_conditions": 3,
+      "observed_indicators": {
+        "average_minimum_temperature": 22.62,
+        "average_daily_temperature": 27.41,
+        "average_daily_humidity": 74.65,
+        "days_humidity_above_85": 0
+      },
+      "conditions": {
+        "average_minimum_temperature_above_21": true,
+        "average_daily_temperature_above_25_5": true,
+        "humidity_above_85_for_14_days": false
+      },
+      "source": "Bangladesh Rice Research Institute Research Progress 2023-2024",
+      "source_url": "https://objectstorage.ap-dcc-gazipur-1.oraclecloud15.com/n/axvjbnqprylg/b/V2Ministry/o/office-brri/2024/12/9963aa922c5d40568819f396ae34074c.pdf",
+      "note": "These are BRRI research screening conditions, not a calibrated disease probability."
+    }
+  ],
+  "limitations": [
+    "Weather indicators do not confirm crop infection.",
+    "NASA POWER data are gridded estimates.",
+    "Potato humidity threshold is an experimental proxy.",
+    "Tomato assessment is contextual, not a validated risk score.",
+    "Rice criteria are based on BRRI research and require local validation.",
+    "Crop growth stage and pathogen presence are not yet included."
+  ]
+}

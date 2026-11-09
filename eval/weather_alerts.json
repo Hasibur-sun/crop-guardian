@@ -1,0 +1,56 @@
+{
+  "project": "Crop Guardian",
+  "system": "Weather Alert Engine",
+  "location": {
+    "latitude": 23.8103,
+    "longitude": 90.4125,
+    "timezone": "Asia/Dhaka"
+  },
+  "data_source": "NASA POWER",
+  "total_alerts": 3,
+  "alerts": [
+    {
+      "crop": "potato",
+      "disease": "Late blight",
+      "assessment": "limited_favorable_indicators",
+      "alert_level": "NO_STRONG_SIGNAL",
+      "message_en": "The selected late blight weather indicators were limited during the observation period. Continue monitoring.",
+      "message_bn": "পর্যবেক্ষণের সময়ে লেট ব্লাইটের নির্বাচিত আবহাওয়াগত সংকেত সীমিত ছিল। ফসল নিয়মিত পর্যবেক্ষণ করুন।",
+      "requires_field_inspection": false,
+      "treatment_recommendation": null,
+      "source": "Bangladesh Agro-Meteorological Information Service (BAMIS), DAE",
+      "source_url": "https://www.bamis.gov.bd/en/diseases/1/all/52/",
+      "generated_at_utc": "2026-11-09T12:46:13.551390+00:00",
+      "disclaimer": "Weather indicators do not confirm the presence of disease."
+    },
+    {
+      "crop": "tomato",
+      "disease": "Early blight",
+      "assessment": "weather_context_only",
+      "alert_level": "WEATHER_CONTEXT",
+      "message_en": "Weather observations are available. No locally validated numerical early blight risk score is currently applied.",
+      "message_bn": "আবহাওয়ার তথ্য পাওয়া গেছে। তবে টমেটোর আর্লি ব্লাইটের জন্য স্থানীয়ভাবে যাচাইকৃত সংখ্যাগত ঝুঁকি মডেল এখনো প্রয়োগ করা হয়নি।",
+      "requires_field_inspection": false,
+      "treatment_recommendation": null,
+      "source": "BAMIS Bangladesh regional tomato Early blight disease-weather calendars",
+      "source_url": "https://www.bamis.gov.bd/calendar/3/13/132",
+      "generated_at_utc": "2026-11-09T12:46:13.552581+00:00",
+      "disclaimer": "Weather indicators do not confirm the presence of disease."
+    },
+    {
+      "crop": "rice",
+      "disease": "Blast",
+      "assessment": "research_conditions_not_met",
+      "alert_level": "RESEARCH_CONDITIONS_NOT_MET",
+      "message_en": "The selected BRRI research weather conditions were not fully met. Continue routine field monitoring.",
+      "message_bn": "ব্রি-এর গবেষণায় উল্লেখিত নির্বাচিত আবহাওয়াগত শর্তগুলো সম্পূর্ণ পূরণ হয়নি। নিয়মিত ধানক্ষেত পর্যবেক্ষণ করুন।",
+      "requires_field_inspection": false,
+      "treatment_recommendation": null,
+      "source": "Bangladesh Rice Research Institute Research Progress 2023-2024",
+      "source_url": "https://objectstorage.ap-dcc-gazipur-1.oraclecloud15.com/n/axvjbnqprylg/b/V2Ministry/o/office-brri/2024/12/9963aa922c5d40568819f396ae34074c.pdf",
+      "generated_at_utc": "2026-11-09T12:46:13.552850+00:00",
+      "disclaimer": "Weather indicators do not confirm the presence of disease."
+    }
+  ],
+  "disclaimer": "These are weather-based screening alerts, not confirmed disease diagnoses."
+}

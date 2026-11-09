@@ -102,7 +102,10 @@ def hybrid_diagnose(
 
     try:
 
-        gemini_result = diagnose(str(image_path))
+        gemini_result = diagnose(
+    str(image_path),
+    use_cache=False
+    )
 
         result["gemini"] = gemini_result
 

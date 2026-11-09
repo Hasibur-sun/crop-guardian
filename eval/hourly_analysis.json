@@ -1,0 +1,38 @@
+{
+  "data_source": "NASA POWER Hourly API",
+  "time_standard": "UTC",
+  "start": "2026-10-31T00:00:00",
+  "end": "2026-11-07T23:00:00",
+  "coverage": {
+    "records_received": 192,
+    "expected_hourly_records": 192,
+    "valid_temperature": 192,
+    "valid_humidity": 192,
+    "valid_rainfall": 192,
+    "missing_records": 0
+  },
+  "total_rainfall_mm": 5.47,
+  "humidity_analysis": {
+    "above_90_percent": {
+      "threshold_percent": 90,
+      "total_qualifying_hours": 22,
+      "longest_consecutive_hours": 4,
+      "longest_period_start_utc": "2026-10-31T21:00:00",
+      "longest_period_end_utc": "2026-11-01T00:00:00",
+      "average_temperature_during_period": 22.53,
+      "rainfall_during_qualifying_hours_mm": 0.01,
+      "rainfall_observations": 22
+    },
+    "above_85_percent": {
+      "threshold_percent": 85,
+      "total_qualifying_hours": 56,
+      "longest_consecutive_hours": 12,
+      "longest_period_start_utc": "2026-11-02T14:00:00",
+      "longest_period_end_utc": "2026-11-03T01:00:00",
+      "average_temperature_during_period": 23.17,
+      "rainfall_during_qualifying_hours_mm": 0.02,
+      "rainfall_observations": 56
+    }
+  },
+  "note": "Humidity is an environmental proxy, not a direct leaf-wetness measurement. This analysis does not confirm disease infection."
+}

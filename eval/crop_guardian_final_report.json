@@ -1,0 +1,48 @@
+{
+  "project": "Crop Guardian",
+  "image": "brinjal_1.jpg",
+  "selected_crop": "brinjal",
+  "diagnosis": {
+    "image": "brinjal_1.jpg",
+    "selected_crop": "brinjal",
+    "hybrid_status": "gemini_only",
+    "crop_agreement": true,
+    "disease_agreement": null,
+    "needs_review": true,
+    "model_predictions": [
+      {
+        "source_model": "Gemini",
+        "crop": "brinjal",
+        "disease": "Healthy",
+        "model_score": 0.85
+      }
+    ],
+    "knowledge_retrieval": [],
+    "farmer_guidance_allowed": false,
+    "final_message": "Both models predicted that the plant is healthy. However, the EfficientNet global crop prediction disagrees with the selected crop. The result is not independently confirmed. No disease-specific knowledge search was performed. Please seek agriculture officer confirmation if symptoms are present.",
+    "warnings": [
+      "EfficientNet does not support this crop. Using Gemini only.",
+      "No independent EfficientNet prediction is available for comparison.",
+      "No disease knowledge search performed for prediction: Healthy"
+    ]
+  },
+  "weather_intelligence": {
+    "data_source": "NASA POWER",
+    "location": {
+      "latitude": 23.8103,
+      "longitude": 90.4125,
+      "timezone": "Asia/Dhaka"
+    },
+    "crop_weather_context": [],
+    "disease_specific_matches": [],
+    "weather_disease_match_found": false
+  },
+  "safety": {
+    "image_diagnosis_is_confirmed": false,
+    "weather_confirms_disease": false,
+    "weather_location_is_farm_verified": false,
+    "farmer_guidance_allowed": false,
+    "human_review_required": true,
+    "disclaimer": "Weather indicators do not confirm disease infection. NASA POWER provides gridded weather estimates. The configured Dhaka coordinates may not represent the farmer's actual field. Consult an agricultural officer when symptoms or uncertainty are present."
+  }
+}

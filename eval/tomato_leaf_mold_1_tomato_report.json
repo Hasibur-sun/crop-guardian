@@ -1,0 +1,102 @@
+{
+  "project": "Crop Guardian",
+  "image": "tomato_leaf_mold_1.jpg",
+  "selected_crop": "tomato",
+  "diagnosis": {
+    "image": "tomato_leaf_mold_1.jpg",
+    "selected_crop": "tomato",
+    "hybrid_status": "model_disagreement",
+    "crop_agreement": true,
+    "disease_agreement": false,
+    "needs_review": true,
+    "model_predictions": [
+      {
+        "source_model": "EfficientNet-B0",
+        "crop": "tomato",
+        "disease": "Late_blight",
+        "model_score": 0.9387
+      },
+      {
+        "source_model": "Gemini",
+        "crop": "tomato",
+        "disease": "Leaf mold",
+        "model_score": 0.8
+      }
+    ],
+    "knowledge_retrieval": [
+      {
+        "predicted_by": "EfficientNet-B0",
+        "predicted_disease": "Late_blight",
+        "model_score": 0.9387,
+        "retrieval_status": "success",
+        "knowledge": [
+          {
+            "id": "tomato_late_blight_bd",
+            "document": "Crop: tomato\nDisease: Late blight\nScientific name: Phytophthora infestans\nSymptoms: Water-soaked irregular patches on leaves; Patches become dark brown or black; White fungal-like growth may appear on leaf undersides in humid conditions; Infection may spread to stems and fruits\nEarly signs: Pale green water-soaked patches on leaves\nLow-cost actions: Use healthy seedlings; Remove and destroy infected plants; Avoid unnecessary irrigation during disease development\nChemical options: \nFavorable conditions: Low temperature around 12-15 degrees Celsius; Relative humidity above 96%; Cloudy humid weather and light rain",
+            "disease": "Late blight",
+            "source_name": "Agricultural Information Service (AIS), Bangladesh",
+            "source_url": "https://ais.gov.bd/pages/krishi-kotha/টমেটোর-রোগ-ও-প্রতিকার-b5100d-6922d94ddbfbab28ce04b0c0",
+            "verification_status": "source_reviewed",
+            "distance": 0.2619
+          }
+        ]
+      },
+      {
+        "predicted_by": "Gemini",
+        "predicted_disease": "Leaf mold",
+        "model_score": 0.8,
+        "retrieval_status": "success",
+        "knowledge": [
+          {
+            "id": "tomato_leaf_mold_bd",
+            "document": "Crop: tomato\nDisease: Leaf mold\nScientific name: Passalora fulva\nSymptoms: Pale green or yellow spots develop on upper leaf surfaces; Olive-green to brown velvety growth appears underneath leaves; Spots may merge into larger affected areas; Leaves gradually yellow, dry and fall; Severe infection can cause extensive defoliation\nEarly signs: Small pale yellow patches on upper leaf surfaces; Early olive-green growth on the lower leaf surface\nLow-cost actions: Improve air circulation between plants; Remove severely infected lower leaves; Remove infected crop debris; Avoid excessive leaf wetness; Maintain adequate spacing between plants\nChemical options: \nFavorable conditions: Relative humidity above 85%; Moderate temperatures; Prolonged moisture on leaves",
+            "disease": "Leaf mold",
+            "source_name": "University of Minnesota Extension",
+            "source_url": "https://extension.umn.edu/agriculture/specialty-crops/vegetable-farming/disease-management/tomato-leaf-mold",
+            "verification_status": "needs_local_verification",
+            "distance": 0.2171
+          }
+        ]
+      }
+    ],
+    "farmer_guidance_allowed": false,
+    "final_message": "The AI models disagree or require review. Both predictions and their source references are available for examination. Please seek confirmation from an agriculture officer.",
+    "warnings": [
+      "EfficientNet and Gemini disagree on the most likely disease."
+    ]
+  },
+  "weather_intelligence": {
+    "data_source": "NASA POWER",
+    "location": {
+      "latitude": 23.8103,
+      "longitude": 90.4125,
+      "timezone": "Asia/Dhaka"
+    },
+    "crop_weather_context": [
+      {
+        "crop": "tomato",
+        "disease": "Early blight",
+        "assessment": "weather_context_only",
+        "alert_level": "WEATHER_CONTEXT",
+        "message_en": "Weather observations are available. No locally validated numerical early blight risk score is currently applied.",
+        "message_bn": "আবহাওয়ার তথ্য পাওয়া গেছে। তবে টমেটোর আর্লি ব্লাইটের জন্য স্থানীয়ভাবে যাচাইকৃত সংখ্যাগত ঝুঁকি মডেল এখনো প্রয়োগ করা হয়নি।",
+        "requires_field_inspection": false,
+        "treatment_recommendation": null,
+        "source": "BAMIS Bangladesh regional tomato Early blight disease-weather calendars",
+        "source_url": "https://www.bamis.gov.bd/calendar/3/13/132",
+        "generated_at_utc": "2026-11-09T12:46:13.552581+00:00",
+        "disclaimer": "Weather indicators do not confirm the presence of disease."
+      }
+    ],
+    "disease_specific_matches": [],
+    "weather_disease_match_found": false
+  },
+  "safety": {
+    "image_diagnosis_is_confirmed": false,
+    "weather_confirms_disease": false,
+    "weather_location_is_farm_verified": false,
+    "farmer_guidance_allowed": false,
+    "human_review_required": true,
+    "disclaimer": "Weather indicators do not confirm disease infection. NASA POWER provides gridded weather estimates. The configured Dhaka coordinates may not represent the farmer's actual field. Consult an agricultural officer when symptoms or uncertainty are present."
+  }
+}
