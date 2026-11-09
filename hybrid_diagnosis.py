@@ -208,12 +208,30 @@ def hybrid_diagnose(
     # 9. FINAL RELIABILITY CHECK
     # ======================================
 
+
+    # ======================================
+    # 9. FINAL RELIABILITY CHECK
+    # ======================================
+
     global_crop_agreement = (
         efficientnet_result.get(
             "selected_crop_matches_global_prediction",
             False
         )
     )
+
+    # Store global crop verification separately
+    result["global_crop_agreement"] = (
+        global_crop_agreement
+    )
+
+    # Crop verification warning
+    if not crop_agreement:
+
+        result["warnings"].append(
+            "Gemini crop prediction disagrees "
+            "with farmer-selected crop."
+        )
 
     if not global_crop_agreement:
 
@@ -222,6 +240,7 @@ def hybrid_diagnose(
             "disagrees with farmer-selected crop."
         )
 
+    # Disease agreement warning
     if not disease_agreement:
 
         result["warnings"].append(
@@ -229,19 +248,36 @@ def hybrid_diagnose(
             "on the most likely disease."
         )
 
-    # Do not automatically choose either model
-    if (
-        crop_agreement
-        and disease_agreement
-        and global_crop_agreement
-    ):
+    # --------------------------------------
+    # SEPARATE DISEASE AND CROP AGREEMENT
+    # --------------------------------------
 
-        result["status"] = "model_agreement"
-        result["needs_review"] = False
+    if crop_agreement and disease_agreement:
+
+        if global_crop_agreement:
+
+            result["status"] = "model_agreement"
+
+            result["needs_review"] = False
+
+        else:
+
+            result["status"] = (
+                "disease_agreement_crop_uncertain"
+            )
+
+            result["needs_review"] = True
+
+    elif not crop_agreement:
+
+        result["status"] = "crop_mismatch"
+
+        result["needs_review"] = True
 
     else:
 
         result["status"] = "model_disagreement"
+
         result["needs_review"] = True
 
     # ======================================
@@ -249,29 +285,62 @@ def hybrid_diagnose(
     # ======================================
 
     result["summary"] = {
+
         "selected_crop": selected_crop,
 
         "efficientnet_top_prediction": {
+
             "disease": efficientnet_top1["disease"],
+
             "model_score": efficientnet_top1["model_score"]
         },
 
         "gemini_top_prediction": {
+
             "disease": gemini_top1["disease"],
+
             "model_score": gemini_top1["confidence"]
         },
 
         "crop_agreement": crop_agreement,
+
         "disease_agreement": disease_agreement,
 
+        "global_crop_agreement": global_crop_agreement,
+
+        "status": result["status"],
+
+        "needs_review": result["needs_review"],
+
         "recommendation": (
-            "Show both assessments and request "
-            "agriculture officer confirmation."
-            if result["needs_review"]
-            else "Show the matching assessments, "
-                 "but do not treat model agreement as proof."
+
+            "Both models agree on the disease, "
+            "but global crop verification failed. "
+            "Request agriculture officer confirmation."
+
+            if result["status"] == "disease_agreement_crop_uncertain"
+
+            else
+
+            "The models disagree. Show both predictions "
+            "and request agriculture officer confirmation."
+
+            if result["status"] == "model_disagreement"
+
+            else
+
+            "The selected crop and model crop prediction "
+            "do not match. Request crop verification."
+
+            if result["status"] == "crop_mismatch"
+
+            else
+
+            "All model and crop checks agree. "
+            "This is not proof of disease status."
         )
     }
+
 
     return result
 
