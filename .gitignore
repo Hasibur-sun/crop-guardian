@@ -1,5 +1,7 @@
+
 # Python virtual environment
 venv/
+.venv/
 __pycache__/
 *.pyc
 
@@ -10,10 +12,14 @@ __pycache__/
 # Cache files
 cache/
 
+# ChromaDB generated database
+knowledge/chroma_db/
+
 # VS Code settings
 .vscode/
 
 # Temporary files
 *.log
+
 # Test images (keep locally)
 test_images/

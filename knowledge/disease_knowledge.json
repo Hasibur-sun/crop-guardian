@@ -1,0 +1,666 @@
+
+[
+  {
+    "id": "potato_late_blight_bd",
+    "crop": "potato",
+    "disease": "Late blight",
+    "scientific_name": "Phytophthora infestans",
+    "symptoms": [
+      "Water-soaked or blister-like spots on leaves",
+      "Green or yellow lesions that can turn dark",
+      "Leaves may progressively dry and decompose"
+    ],
+    "early_signs": [
+      "Initial watery-looking spots on foliage",
+      "Lesions developing under cool and humid conditions"
+    ],
+    "low_cost_actions": [],
+    "chemical_options": [],
+    "favorable_conditions": [
+      "Temperature around 16-20 degrees Celsius",
+      "Cold and humid weather",
+      "Fog, drizzling and dew accumulation on leaves"
+    ],
+    "source_name": "Bangladesh Agro-Meteorological Information Service (BAMIS), DAE",
+    "source_url": "https://www.bamis.gov.bd/en/diseases/1/all/52/",
+    "source_language": "English",
+    "verification_status": "source_reviewed",
+    "notes": "BAMIS also lists chemical control recommendations. They are intentionally excluded from this initial entry pending separate label and registration verification."
+  },
+  {
+    "id": "rice_blast_bd",
+    "crop": "rice",
+    "disease": "Blast",
+    "scientific_name": "Pyricularia grisea",
+    "symptoms": [
+      "Small oval gray or white lesions on leaves",
+      "Dark brown margins around lesions",
+      "Lesions may enlarge and become eye-shaped",
+      "Severe infection can cause leaves to appear scorched"
+    ],
+    "early_signs": [
+      "Small gray or whitish spots on rice leaves",
+      "Dark brown borders around initial lesions"
+    ],
+    "low_cost_actions": [
+      "Use disease-resistant rice varieties",
+      "Apply balanced fertilizers",
+      "Avoid excessive urea fertilizer",
+      "Maintain appropriate water in the field"
+    ],
+    "chemical_options": [],
+    "favorable_conditions": [
+      "Cool nights and warm daytime conditions",
+      "Morning dew on leaves",
+      "Conditions favoring prolonged leaf wetness"
+    ],
+    "source_name": "Agricultural Information Service (AIS), Bangladesh",
+    "source_url": "https://ais.gov.bd/pages/krishi-kotha/ধানের-রোগ-ও-প্রতিকার-da0253-6922d93fdbfbab28ce04a2ef",
+    "source_language": "Bangla",
+    "verification_status": "source_reviewed",
+    "notes": "Management recommendations are summarized from the official AIS rice disease guidance."
+  },
+{
+  "id": "tomato_early_blight_bd",
+  "crop": "tomato",
+  "disease": "Early blight",
+  "scientific_name": "Alternaria solani",
+  "symptoms": [
+    "Circular brown spots on older lower leaves",
+    "Concentric target-like rings within lesions",
+    "Multiple lesions may merge and damage leaf tissue",
+    "Affected leaves may turn yellow and fall"
+  ],
+  "early_signs": [
+    "Small circular brown spots on older lower leaves"
+  ],
+  "low_cost_actions": [
+    "Use healthy disease-free seeds",
+    "Maintain balanced fertilizer application",
+    "Remove and destroy infected crop residues",
+    "Control weeds and alternative host plants"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [
+    "Temperature around 24-28 degrees Celsius",
+    "Relative humidity above 80%",
+    "Rain splash and wind can spread infection"
+  ],
+  "source_name": "Agricultural Information Service (AIS), Bangladesh",
+  "source_url": "https://ais.gov.bd/pages/krishi-kotha/টমেটোর-রোগ-ও-প্রতিকার-b5100d-6922d94ddbfbab28ce04b0c0",
+  "source_language": "Bangla",
+  "verification_status": "source_reviewed",
+  "notes": "Symptoms and cultural management summarized from AIS. Chemical recommendations intentionally omitted."
+},
+{
+  "id": "tomato_late_blight_bd",
+  "crop": "tomato",
+  "disease": "Late blight",
+  "scientific_name": "Phytophthora infestans",
+  "symptoms": [
+    "Water-soaked irregular patches on leaves",
+    "Patches become dark brown or black",
+    "White fungal-like growth may appear on leaf undersides in humid conditions",
+    "Infection may spread to stems and fruits"
+  ],
+  "early_signs": [
+    "Pale green water-soaked patches on leaves"
+  ],
+  "low_cost_actions": [
+    "Use healthy seedlings",
+    "Remove and destroy infected plants",
+    "Avoid unnecessary irrigation during disease development"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [
+    "Low temperature around 12-15 degrees Celsius",
+    "Relative humidity above 96%",
+    "Cloudy humid weather and light rain"
+  ],
+  "source_name": "Agricultural Information Service (AIS), Bangladesh",
+  "source_url": "https://ais.gov.bd/pages/krishi-kotha/টমেটোর-রোগ-ও-প্রতিকার-b5100d-6922d94ddbfbab28ce04b0c0",
+  "source_language": "Bangla",
+  "verification_status": "source_reviewed",
+  "notes": "Symptoms and environmental conditions summarized from AIS. Chemical recommendations omitted."
+},
+{
+  "id": "tomato_bacterial_wilt_bd",
+  "crop": "tomato",
+  "disease": "Bacterial wilt",
+  "scientific_name": "Ralstonia solanacearum",
+  "symptoms": [
+    "Leaves and stems wilt rapidly",
+    "Plant may die without obvious leaf spots",
+    "Discoloration may occur inside the lower stem",
+    "Bacterial streaming may be visible when infected stem sections are placed in water"
+  ],
+  "early_signs": [
+    "Partial wilting of leaves or branches",
+    "Wilting may progress rapidly"
+  ],
+  "low_cost_actions": [
+    "Use resistant varieties where available",
+    "Remove and destroy infected plants",
+    "Practice crop rotation",
+    "Avoid waterlogged field conditions"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [
+    "Temperature around 28-32 degrees Celsius",
+    "High humidity",
+    "Contaminated irrigation water and soil"
+  ],
+  "source_name": "Agricultural Information Service (AIS), Bangladesh",
+  "source_url": "https://ais.gov.bd/pages/krishi-kotha/টমেটোর-রোগ-ও-প্রতিকার-b5100d-6922d94ddbfbab28ce04b0c0",
+  "source_language": "Bangla",
+  "verification_status": "source_reviewed",
+  "notes": "AIS describes bacterial wilt symptoms, transmission and cultural management."
+},
+{
+  "id": "tomato_leaf_curl_bd",
+  "crop": "tomato",
+  "disease": "Tomato yellow leaf curl virus",
+  "scientific_name": "Tomato yellow leaf curl virus",
+  "symptoms": [
+    "Leaves curl and become distorted",
+    "Plants become stunted",
+    "Leaves may become thick and brittle",
+    "Fruit production may decrease"
+  ],
+  "early_signs": [
+    "Upward or inward curling of young leaves",
+    "Abnormal leaf growth"
+  ],
+  "low_cost_actions": [
+    "Use healthy seedlings",
+    "Remove infected plants",
+    "Monitor whitefly populations",
+    "Keep the field free of weeds that can host vectors"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [
+    "Presence of whitefly insect vectors",
+    "Conditions favoring whitefly population growth"
+  ],
+  "source_name": "Agricultural Information Service (AIS), Bangladesh",
+  "source_url": "https://ais.gov.bd/pages/krishi-kotha/টমেটোর-রোগ-ও-প্রতিকার-b5100d-6922d94ddbfbab28ce04b0c0",
+  "source_language": "Bangla",
+  "verification_status": "source_reviewed",
+  "notes": "AIS describes leaf curling, stunting and whitefly-mediated transmission."
+  },
+  {
+    "id": "potato_early_blight_bd",
+    "crop": "potato",
+    "disease": "Early blight",
+    "scientific_name": "Alternaria solani",
+    "symptoms": [
+      "Brown circular spots on older leaves",
+      "Concentric rings inside lesions",
+      "Multiple spots may merge into larger damaged areas",
+      "Affected leaves may dry and curl"
+    ],
+    "early_signs": [
+      "Small brown circular spots on older leaves"
+    ],
+    "low_cost_actions": [
+      "Use healthy disease-free planting material",
+      "Remove infected crop residues after harvest",
+      "Maintain balanced fertilizer application",
+      "Apply irrigation appropriately"
+    ],
+    "chemical_options": [],
+    "favorable_conditions": [
+      "Temperature around 24-28 degrees Celsius",
+      "Relative humidity above 80%",
+      "Rain splash and wind can spread infection"
+    ],
+    "source_name": "Agricultural Information Service (AIS), Bangladesh",
+    "source_url": "https://ais.gov.bd/pages/krishi-kotha/শীতকালীন-সবজির-রোগ-ও-প্রতিকার-015e83-6922d959dbfbab28ce04b9a9",
+    "source_language": "Bangla",
+    "verification_status": "needs_verification",
+    "notes": "AIS discusses early blight affecting potato and tomato. Full source review is pending."
+  },
+  {
+    "id": "potato_bacterial_wilt_bd",
+    "crop": "potato",
+    "disease": "Bacterial wilt",
+    "scientific_name": "Ralstonia solanacearum",
+    "symptoms": [
+      "Partial wilting of leaves or branches",
+      "Wilting can progress rapidly",
+      "Plant may die prematurely",
+      "Bacterial streaming may be visible from a cut stem placed in clear water"
+    ],
+    "early_signs": [
+      "One leaf or branch begins to wilt",
+      "Partial wilting may occur before the whole plant collapses"
+    ],
+    "low_cost_actions": [
+      "Use disease-free planting material",
+      "Remove infected plants",
+      "Practice crop rotation",
+      "Avoid moving contaminated soil or irrigation water between fields",
+      "Stop irrigation in affected areas and seek local agricultural advice"
+    ],
+    "chemical_options": [],
+    "favorable_conditions": [
+      "Temperature around 30-35 degrees Celsius",
+      "Warm and humid conditions"
+    ],
+    "source_name": "Agricultural Information Service (AIS), Bangladesh",
+    "source_url": "https://ais.gov.bd/pages/krishi-kotha/শীতকালীন-সবজির-রোগ-ও-প্রতিকার-015e83-6922d959dbfbab28ce04b9a9",
+    "source_language": "Bangla",
+    "verification_status": "needs_verification",
+    "notes": "AIS discusses bacterial wilt affecting potato, brinjal and tomato. Full source review is pending."
+  },
+  {
+    "id": "potato_scab_bd",
+    "crop": "potato",
+    "disease": "Potato scab",
+    "scientific_name": "Streptomyces species",
+    "symptoms": [],
+    "early_signs": [],
+    "low_cost_actions": [],
+    "chemical_options": [],
+    "favorable_conditions": [
+      "Temperature around 15-25 degrees Celsius",
+      "Relative humidity around 70-90%",
+      "Infestation period reported as December-February"
+    ],
+    "source_name": "Bangladesh Agro-Meteorological Information Service (BAMIS), DAE",
+    "source_url": "https://www.bamis.gov.bd/en/diseases/1/all/52/",
+    "source_language": "English",
+    "verification_status": "partial_source_information",
+    "notes": "BAMIS provides favorable weather information for potato scab, but this entry deliberately leaves symptoms and management empty pending further source verification."
+  },
+  
+{
+  "id": "rice_brown_spot_bd",
+  "crop": "rice",
+  "disease": "Brown spot",
+  "scientific_name": "Bipolaris oryzae",
+  "symptoms": [
+    "Small sesame-seed-like spots initially appear on leaves",
+    "Spots enlarge with pale or whitish centers and brown margins",
+    "Multiple spots may merge and damage leaf tissue",
+    "Infected grains may become discolored and poorly developed"
+  ],
+  "early_signs": [
+    "Tiny brown spots on rice leaves",
+    "Small spots gradually enlarge and develop pale centers"
+  ],
+  "low_cost_actions": [
+    "Use healthy disease-free seeds",
+    "Apply organic fertilizer",
+    "Maintain balanced nitrogen and potassium fertilizer",
+    "Maintain appropriate water management in the field",
+    "Avoid excessive urea fertilizer"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [
+    "Cool nights and warm daytime conditions",
+    "Morning dew on leaves",
+    "Nutrient-deficient soil",
+    "Water deficiency",
+    "Light sandy soil with low water-holding capacity"
+  ],
+  "source_name": "Agricultural Information Service (AIS), Bangladesh",
+  "source_url": "https://ais.gov.bd/pages/krishi-kotha/ধানের-রোগ-ও-প্রতিকার-da0253-6922d93fdbfbab28ce04a2ef",
+  "source_language": "Bangla",
+  "verification_status": "source_reviewed",
+  "notes": "Symptoms, disease cause and cultural management summarized from the official AIS rice disease publication. Chemical recommendations are omitted pending separate label and registration verification."
+},
+
+{
+  "id": "rice_bacterial_leaf_blight_bd",
+  "crop": "rice",
+  "disease": "Bacterial leaf blight",
+  "scientific_name": "Xanthomonas oryzae pv. oryzae",
+  "symptoms": [
+    "Bluish water-soaked lesions initially appear near leaf tips or edges",
+    "Lesions gradually turn yellow",
+    "Infection progresses downward along leaf margins",
+    "Severely affected leaves become dry and straw-colored",
+    "Young seedlings may wilt and die in severe infections"
+  ],
+  "early_signs": [
+    "Small bluish water-soaked areas near leaf tips",
+    "Yellow discoloration developing along leaf margins"
+  ],
+  "low_cost_actions": [
+    "Use disease-resistant rice varieties",
+    "Avoid injuries to roots and plants during transplanting",
+    "Maintain balanced fertilizer application",
+    "Apply urea in appropriate split doses",
+    "Avoid additional urea top-dressing after disease symptoms appear",
+    "Remove and destroy infected crop residues after harvest"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [
+    "Temperature around 26-30 degrees Celsius",
+    "Relative humidity above 70%",
+    "Stormy and rainy weather",
+    "Excessive nitrogen fertilizer application",
+    "Plant injuries during transplanting"
+  ],
+  "source_name": "Agricultural Information Service (AIS), Bangladesh",
+  "source_url": "https://ais.gov.bd/pages/krishi-kotha/ধানের-রোগ-ও-প্রতিকার-da0253-6922d93fdbfbab28ce04a2ef",
+  "source_language": "Bangla",
+  "verification_status": "source_reviewed",
+  "notes": "Symptoms, causal organism, favorable conditions and cultural management summarized from the AIS bacterial blight section. Chemical recommendations omitted."
+},
+{
+  "id": "rice_sheath_blight_bd",
+  "crop": "rice",
+  "disease": "Sheath blight",
+  "scientific_name": "Rhizoctonia solani",
+  "symptoms": [
+    "Water-soaked green lesions appear on the leaf sheath near the water level",
+    "Lesions develop gray centers and brown margins",
+    "Lesions may merge and spread to upper leaf sheaths and leaves",
+    "Severe infection can make patches of the field appear scorched"
+  ],
+  "early_signs": [
+    "Small water-soaked green spots on the lower leaf sheath",
+    "Gray centers and brown margins begin developing around lesions"
+  ],
+  "low_cost_actions": [
+    "Use disease-tolerant rice varieties where available",
+    "Maintain recommended spacing between transplanted seedlings",
+    "Apply balanced fertilizers",
+    "Avoid excessive urea application",
+    "Remove and destroy infected crop residues after harvest"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [
+    "High temperature and humidity",
+    "Frequent rainfall",
+    "Standing water in the field",
+    "Excessive nitrogen fertilizer application",
+    "Dense crop growth"
+  ],
+  "source_name": "Agricultural Information Service (AIS), Bangladesh",
+  "source_url": "https://ais.gov.bd/pages/krishi-kotha/ধানের-রোগ-ও-প্রতিকার-da0253-6922d93fdbfbab28ce04a2ef",
+  "source_language": "Bangla",
+  "verification_status": "source_reviewed",
+  "notes": "Symptoms, causal organism, favorable conditions and cultural management summarized from the official AIS rice disease publication. Chemical recommendations omitted."
+},
+
+{
+  "id": "rice_sheath_rot_bd",
+  "crop": "rice",
+  "disease": "Sheath rot",
+  "scientific_name": "Sarocladium oryzae",
+  "symptoms": [
+    "Irregular grayish-brown lesions develop on the uppermost leaf sheath",
+    "Lesions have gray centers and brown or reddish-brown margins",
+    "Lesions may enlarge and merge across the sheath",
+    "Young panicles may remain trapped inside the sheath or emerge partially",
+    "Rotting may occur inside the sheath with whitish fungal growth",
+    "Affected grains may become discolored and poorly filled"
+  ],
+  "early_signs": [
+    "Small irregular brown lesions on the upper leaf sheath",
+    "Discoloration around the sheath enclosing the young panicle"
+  ],
+  "low_cost_actions": [
+    "Use healthy disease-free seeds",
+    "Maintain balanced fertilizer application",
+    "Avoid excessive nitrogen fertilizer",
+    "Manage insect pests that can injure leaf sheaths",
+    "Remove infected crop residues after harvest"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [
+    "Temperature around 25-28 degrees Celsius",
+    "Relative humidity above 90%",
+    "Cloudy weather",
+    "Warm and humid conditions",
+    "Booting stage of rice growth"
+  ],
+  "source_name": "AIS Bangladesh, BAMIS/DAE and Bangladesh Rice Journal",
+  "source_url": "https://www.acicropcare.com/crop-pest-solution/rice-pest-management/dhaner-khol-pocha-rog",
+  "source_language": "Bangla",
+  "verification_status": "needs_verification",
+  "notes": "Symptoms and cultural management summarized from ACI Crop Care's Bangladesh rice disease reference. Causal organism cross-checked against Bangladesh Rice Journal. Favorable weather and booting-stage information cross-checked against BAMIS/DAE. Chemical recommendations omitted."
+},
+
+{
+  "id": "brinjal_bacterial_wilt_bd",
+  "crop": "brinjal",
+  "disease": "Bacterial wilt",
+  "scientific_name": "Ralstonia solanacearum",
+  "symptoms": [
+    "Affected plants develop wilting",
+    "Wilting can progress to the whole plant",
+    "Severely affected plants may die"
+  ],
+  "early_signs": [
+    "Wilting begins in an affected plant"
+  ],
+  "low_cost_actions": [
+    "Use resistant varieties such as BARI Begun-8",
+    "Use properly drained land",
+    "Remove and destroy infected plants",
+    "Practice crop rotation with non-host crops such as rice, wheat or maize",
+    "Manage irrigation carefully in infected fields",
+    "Avoid planting brinjal repeatedly in contaminated soil"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [],
+  "source_name": "Bangladesh Agricultural Research Institute (BARI) and Department of Agricultural Extension (DAE)",
+  "source_url": "https://file.portal.gov.bd/uploads/041c2f0e-ff60-4628-8bf5-a23d1dab9d4f/652/4d0/dcc/6524d0dcc2851216545692.pdf",
+  "source_language": "English",
+  "verification_status": "source_reviewed",
+  "notes": "BARI Technology #58 documents integrated management of brinjal bacterial wilt. DAE Bangladesh Pest Risk Analysis identifies Ralstonia solanacearum as the causal organism. Detailed symptom descriptions and environmental thresholds require further verification."
+},
+
+{
+  "id": "brinjal_phomopsis_fruit_rot_bd",
+  "crop": "brinjal",
+  "disease": "Phomopsis fruit rot",
+  "scientific_name": "Phomopsis vexans",
+  "symptoms": [
+    "Small pale or grayish sunken spots develop on fruits",
+    "Spots have brownish halos",
+    "Lesions enlarge and develop concentric rings",
+    "Infected fruits become soft and watery",
+    "Severe infection can cause fruits to turn black and mummified",
+    "Circular gray to brown spots may also develop on leaves"
+  ],
+  "early_signs": [
+    "Small pale sunken spots on fruits",
+    "Grayish spots with brownish halos",
+    "Small circular gray or brown leaf spots"
+  ],
+  "low_cost_actions": [
+    "Use healthy disease-free seeds",
+    "Collect and destroy infected fruits and crop debris",
+    "Maintain field sanitation",
+    "Avoid repeatedly growing brinjal in the same field",
+    "Monitor plants regularly for early symptoms"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [
+    "Warm and wet weather",
+    "High atmospheric moisture",
+    "Infected crop debris in the field"
+  ],
+  "source_name": "Sher-e-Bangla Agricultural University, Department of Plant Pathology",
+  "source_url": "https://saulibrary.edu.bd/daatj/public/index.php/getDownload/SAU201501_01-09-03292_11.pdf",
+  "source_language": "English",
+  "verification_status": "source_reviewed",
+  "notes": "Symptoms, causal organism, seed-borne nature and environmental observations summarized from the 2015 M.S. research thesis on Phomopsis fruit rot of eggplant. Cultural hygiene actions are included; chemical recommendations omitted."
+},
+
+{
+  "id": "brinjal_little_leaf_bd",
+  "crop": "brinjal",
+  "disease": "Little leaf",
+  "scientific_name": "Phytoplasma spp.",
+  "symptoms": [
+    "Leaves become unusually small and malformed",
+    "Young leaves develop tiny chlorotic structures",
+    "Flower buds become upright instead of pendulous",
+    "Flowers may become leaf-like structures",
+    "Short branches and small leaves create a bushy rosette appearance",
+    "Infected plants may produce no fruits or hard, tough fruits"
+  ],
+  "early_signs": [
+    "Reduction in the size of newly developing leaves",
+    "Abnormally shaped young leaves",
+    "Shortening of branches and internodes"
+  ],
+  "low_cost_actions": [
+    "Remove and destroy infected plants",
+    "Monitor leafhopper populations",
+    "Use yellow sticky sheets as part of integrated vector management"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [
+    "Presence of leafhopper vectors",
+    "Conditions supporting leafhopper population growth"
+  ],
+  "source_name": "Bangladesh Biosafety Portal and Bangladesh Agricultural Research Institute",
+  "source_url": "https://bangladeshbiosafety.org/wp-content/uploads/2017/06/Biology_of_Brinjal_In.pdf",
+  "source_language": "English",
+  "verification_status": "needs_verification",
+  "notes": "Symptoms and phytoplasma association summarized from the Biology of Brinjal reference. BARI Annual Report 2019-20 records a trial in which yellow sticky polythene sheets significantly reduced disease severity in 2019; results were not consistent across all trial years."
+},
+{
+  "id": "tomato_fusarium_wilt_bd",
+  "crop": "tomato",
+  "disease": "Fusarium wilt",
+  "scientific_name": "Fusarium oxysporum f. sp. lycopersici",
+  "symptoms": [
+    "Older leaves may bend downward and wilt",
+    "Yellowing may begin on one side of the plant",
+    "Brown discoloration may occur in stems and roots",
+    "Wilting can gradually spread throughout the plant",
+    "Severely affected plants may die"
+  ],
+  "early_signs": [
+    "Yellowing and wilting of older leaves",
+    "Wilting may initially affect one branch or side of the plant"
+  ],
+  "low_cost_actions": [
+    "Use healthy disease-free seedlings",
+    "Remove and destroy infected plants",
+    "Maintain balanced potassium fertilization",
+    "Avoid planting in contaminated soil where possible"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [],
+  "source_name": "Agricultural Information Service (AIS), Bangladesh",
+  "source_url": "https://ais.gov.bd/pages/krishi-kotha/টমেটোর-রোগ-ও-প্রতিকার-b5100d-6922d94ddbfbab28ce04b0c0",
+  "source_language": "Bangla",
+  "verification_status": "needs_verification",
+  "notes": "Causal organism and symptoms summarized from AIS tomato disease guidance. Cultural management is summarized from its recommendations. Chemical recommendations omitted."
+},
+{
+  "id": "tomato_bacterial_spot_bd",
+  "crop": "tomato",
+  "disease": "Bacterial spot",
+  "scientific_name": "Xanthomonas campestris pv. vesicatoria",
+  "symptoms": [
+    "Small brown water-soaked circular spots develop on leaves",
+    "Lesions may have yellowish halos",
+    "Older leaves may develop extensive spotting and defoliation",
+    "Green fruits may develop raised water-soaked spots",
+    "Fruit lesions may become rough and slightly sunken"
+  ],
+  "early_signs": [
+    "Small water-soaked brown spots on leaves",
+    "Yellowish halos surrounding leaf lesions"
+  ],
+  "low_cost_actions": [
+    "Use healthy disease-free seeds",
+    "Remove infected crop debris",
+    "Avoid working with wet plants",
+    "Monitor leaves and green fruits for early symptoms"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [
+    "Moist weather",
+    "Splattering rain",
+    "Wet foliage"
+  ],
+  "source_name": "Biology of Solanum lycopersicum, Bangladesh Biosafety Portal",
+  "source_url": "https://bangladeshbiosafety.org/wp-content/uploads/2017/06/Biology_of_Solanum_lycoperscicum_Tomato_In.pdf",
+  "source_language": "English",
+  "verification_status": "needs_verification",
+  "notes": "Symptoms, pathogen association and favorable weather summarized from the tomato biology reference. Exact current taxonomy should be checked before publication."
+},
+{
+  "id": "tomato_mosaic_virus_bd",
+  "crop": "tomato",
+  "disease": "Tomato mosaic virus",
+  "scientific_name": "Tobacco mosaic virus (TMV)",
+  "symptoms": [
+    "Light and dark green mottling appears on leaves",
+    "Young leaves may wilt during sunny conditions",
+    "Leaflets become distorted, puckered and smaller",
+    "Fern-like leaf symptoms may occur",
+    "Affected plants may become stunted and pale green"
+  ],
+  "early_signs": [
+    "Irregular light and dark green mosaic patterns",
+    "Distortion and puckering of young leaves"
+  ],
+  "low_cost_actions": [
+    "Clean and disinfect tools used on plants",
+    "Avoid touching healthy plants immediately after handling infected plants",
+    "Remove infected plant debris",
+    "Monitor plants for abnormal leaf mottling"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [
+    "Contact with infected plants",
+    "Contaminated hands, clothing and agricultural implements",
+    "Presence of infected plant debris"
+  ],
+  "source_name": "Biology of Solanum lycopersicum, Bangladesh Biosafety Portal",
+  "source_url": "https://bangladeshbiosafety.org/wp-content/uploads/2017/06/Biology_of_Solanum_lycoperscicum_Tomato_In.pdf",
+  "source_language": "English",
+  "verification_status": "needs_verification",
+  "notes": "Symptoms and contact transmission summarized from the tomato biology reference. The source describes TMV; do not assume all tomato mosaic symptoms have this exact viral cause."
+},
+{
+  "id": "tomato_leaf_mold_bd",
+  "crop": "tomato",
+  "disease": "Leaf mold",
+  "scientific_name": "Passalora fulva",
+  "symptoms": [
+    "Pale green or yellow spots develop on upper leaf surfaces",
+    "Olive-green to brown velvety growth appears underneath leaves",
+    "Spots may merge into larger affected areas",
+    "Leaves gradually yellow, dry and fall",
+    "Severe infection can cause extensive defoliation"
+  ],
+  "early_signs": [
+    "Small pale yellow patches on upper leaf surfaces",
+    "Early olive-green growth on the lower leaf surface"
+  ],
+  "low_cost_actions": [
+    "Improve air circulation between plants",
+    "Remove severely infected lower leaves",
+    "Remove infected crop debris",
+    "Avoid excessive leaf wetness",
+    "Maintain adequate spacing between plants"
+  ],
+  "chemical_options": [],
+  "favorable_conditions": [
+    "Relative humidity above 85%",
+    "Moderate temperatures",
+    "Prolonged moisture on leaves"
+  ],
+  "source_name": "University of Minnesota Extension",
+  "source_url": "https://extension.umn.edu/agriculture/specialty-crops/vegetable-farming/disease-management/tomato-leaf-mold",
+  "source_language": "English",
+  "verification_status": "needs_local_verification",
+  "notes": "Symptoms and management summarized from University of Minnesota Extension. This is an international reference, and its environmental guidance should be validated for Bangladeshi field conditions."
+}
+]
+
+
+
