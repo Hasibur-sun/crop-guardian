@@ -63,7 +63,7 @@ def get_dates():
 # 3. FETCH NASA POWER DATA
 # ==========================================
 
-def fetch_hourly():
+def fetch_hourly(latitude=LATITUDE, longitude=LONGITUDE):
 
     start, end = get_dates()
 
@@ -73,9 +73,9 @@ def fetch_hourly():
 
         "community": COMMUNITY,
 
-        "longitude": LONGITUDE,
+        "longitude": longitude,
 
-        "latitude": LATITUDE,
+        "latitude": latitude,
 
         "start": start,
 
@@ -92,7 +92,7 @@ def fetch_hourly():
 
     print("Community:", COMMUNITY)
 
-    print("Location:", LATITUDE, LONGITUDE)
+    print("Location:", latitude, longitude)
 
     print("Parameters:", PARAMETERS)
 
@@ -286,7 +286,7 @@ def save_hourly(records):
 # 6. DISPLAY WEATHER SUMMARY
 # ==========================================
 
-def display_summary(records, start, end):
+def display_summary(records, start, end, latitude=LATITUDE, longitude=LONGITUDE):
 
     valid_temperature = [
 
@@ -318,7 +318,7 @@ def display_summary(records, start, end):
 
     print("\n========== HOURLY WEATHER SUMMARY ==========")
 
-    print("Location:", LATITUDE, LONGITUDE)
+    print("Location:", latitude, longitude)
 
     print("Community:", COMMUNITY)
 
@@ -415,7 +415,7 @@ def display_summary(records, start, end):
 
 def main():
 
-    weather, start, end = fetch_hourly()
+    weather, start, end = fetch_hourly(LATITUDE, LONGITUDE)
 
     records = process_hourly(weather)
 
@@ -430,7 +430,9 @@ def main():
     display_summary(
         records,
         start,
-        end
+        end,
+        LATITUDE,
+        LONGITUDE
     )
 
 

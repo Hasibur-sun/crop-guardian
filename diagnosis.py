@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent
 load_dotenv(BASE_DIR / ".env")
 
 MODEL = "gemini-3.5-flash-lite"
-PROMPT_VERSION = "crop-guardian-day1-v2"
+PROMPT_VERSION = "crop-guardian-day6-leaf-validation-v3"
 
 CACHE_DIR = BASE_DIR / "cache"
 CACHE_DIR.mkdir(exist_ok=True)
@@ -93,12 +93,19 @@ Analyze the uploaded image and return the required JSON.
 
 GENERAL RULES:
 
-1. If the image does not show a crop plant or leaf:
+1. The image must clearly show at least one crop leaf suitable for visual
+   disease assessment. A flower-only, fruit-only, seed-only, soil-only,
+   human, animal, machinery, or unrelated-object photograph is NOT suitable.
+   For these images:
    is_plant_photo=false
    crop="unknown"
    healthy=false
    top3=[]
    symptoms_seen=[]
+
+   A whole crop plant photograph is acceptable only when one or more leaves
+   are clearly visible and large enough to assess. Do not reject a plant merely
+   because it has several leaves or because flowers/fruits also appear.
 
 2. Crop must be one of:
    potato, tomato, rice, brinjal, jute, other, unknown.

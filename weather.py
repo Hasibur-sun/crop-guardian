@@ -197,7 +197,7 @@ def process_weather(weather_data):
 # 5. SAVE WEATHER CSV
 # ==========================================
 
-def save_weather(records):
+def save_weather(records, latitude=DEFAULT_LATITUDE, longitude=DEFAULT_LONGITUDE):
 
     OUTPUT_DIR.mkdir(
         parents=True,
@@ -236,6 +236,18 @@ def save_weather(records):
                     record["PRECTOTCORR"]
                 )
             })
+
+    location_file = OUTPUT_DIR / "weather_location.json"
+    with open(location_file, "w", encoding="utf-8") as location_handle:
+        json_payload = {
+            "latitude": float(latitude),
+            "longitude": float(longitude),
+            "timezone": "Asia/Dhaka",
+            "source": "farmer_selected" if (latitude, longitude) != (DEFAULT_LATITUDE, DEFAULT_LONGITUDE) else "default_dhaka",
+            "saved_at_utc": datetime.now(timezone.utc).isoformat()
+        }
+        import json
+        json.dump(json_payload, location_handle, indent=2)
 
     print("\nWeather data saved successfully.")
 
@@ -393,7 +405,7 @@ def main():
             "No daily weather records were returned."
         )
 
-    save_weather(records)
+    save_weather(records, args.latitude, args.longitude)
 
     display_summary(
         records,

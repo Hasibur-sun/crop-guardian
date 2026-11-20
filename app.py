@@ -7,6 +7,7 @@ from pathlib import Path
 import streamlit as st
 
 from crop_guardian_engine import run_crop_guardian
+from crop_guardian_reports import load_diagnosis_history, build_diagnosis_pdf
 
 
 # =====================================================
@@ -568,9 +569,9 @@ is_bn = language == "বাংলা"
 # =====================================================
 
 page_labels = (
-    ["01 · রোগ পরীক্ষা", "02 · আবহাওয়া", "03 · আমাদের সম্পর্কে"]
+    ["01 · রোগ পরীক্ষা", "02 · আবহাওয়া", "03 · ইতিহাস", "04 · আমাদের সম্পর্কে"]
     if is_bn else
-    ["01 · Check a crop", "02 · Weather", "03 · How it helps"]
+    ["01 · Check a crop", "02 · Weather", "03 · History", "04 · How it helps"]
 )
 
 page = st.radio(
@@ -728,7 +729,19 @@ if page in ("01 · Check a crop", "01 · রোগ পরীক্ষা", "01 �
             with st.spinner(
                 "Examining your crop... Running AI diagnosis and knowledge retrieval."
             ):
-                report = run_crop_guardian(temp_path, selected_crop)
+                location_file = BASE_DIR / "data" / "weather_location.json"
+                saved_field_location = load_json(location_file) or {}
+                field_coordinates = {
+                    "latitude": saved_field_location.get("latitude", 23.8103),
+                    "longitude": saved_field_location.get("longitude", 90.4125),
+                    "source": saved_field_location.get("source", "Dhaka default"),
+                }
+                report = run_crop_guardian(
+                    temp_path,
+                    selected_crop,
+                    original_filename=uploaded_file.name,
+                    field_coordinates=field_coordinates,
+                )
 
             st.session_state["crop_report"] = report
             st.session_state["crop_image_name"] = uploaded_file.name
@@ -757,6 +770,17 @@ if page in ("01 · Check a crop", "01 · রোগ পরীক্ষা", "01 �
         weather = report.get("weather_intelligence", {})
         safety = report.get("safety", {})
 
+        image_validation = diagnosis.get("image_validation", {})
+        if image_validation and not image_validation.get("valid_for_diagnosis", True):
+            validation_reason = image_validation.get("reason", "Please upload a clear crop-leaf photograph.")
+            st.error(validation_reason if not is_bn else "ছবিটি পরীক্ষা করার উপযোগী নয়। পরিষ্কার পাতার ছবি দিন।")
+            st.info(
+                "Try again with a clear, well-lit photo of one crop leaf."
+                if not is_bn else
+                "ভালো আলোতে একটি ফসলের পাতার পরিষ্কার ছবি তুলে আবার চেষ্টা করুন।"
+            )
+            st.stop()
+
         st.markdown("---")
         render_html("""
         <div class="cg-section">
@@ -767,197 +791,119 @@ if page in ("01 · Check a crop", "01 · রোগ পরীক্ষা", "01 �
 
 
         # ----------------------------------
-        # FARMER-FRIENDLY DIAGNOSIS STATUS
+        # SIMPLE FARMER-FACING REPORT
         # ----------------------------------
+        predictions = diagnosis.get("model_predictions", []) or []
+        selected_crop = str(report.get("selected_crop", "crop")).replace("_", " ").title()
+        status = diagnosis.get("hybrid_status", diagnosis.get("status", "uncertain"))
+        needs_review = bool(safety.get("human_review_required", diagnosis.get("needs_review", True)))
+        guidance_allowed = bool(diagnosis.get("farmer_guidance_allowed", False)) and not needs_review
 
-        status = diagnosis.get(
-            "hybrid_status",
-            diagnosis.get("status", "uncertain")
+        def _friendly_disease(value):
+            return str(value or "").replace("_", " ").replace("  ", " ").title()
+
+        disease_names = [
+            _friendly_disease(item.get("disease"))
+            for item in predictions
+            if item.get("disease") and str(item.get("disease")).lower() not in {"unknown", "healthy"}
+        ]
+        same_disease = bool(disease_names) and len(set(x.lower() for x in disease_names)) == 1
+        healthy_only = bool(predictions) and all(
+            str(item.get("disease", "")).strip().lower() == "healthy" for item in predictions
         )
 
-        needs_review = safety.get(
-            "human_review_required",
-            diagnosis.get("needs_review", True)
-        )
-
-        if status == "disease_agreement_crop_uncertain":
-
-            if is_bn:
-                st.warning(
-                    "দুটি AI মডেল রোগের বিষয়ে একমত। "
-                    "তবে ফসলের ধরন যাচাইয়ে আরও নিশ্চিত হওয়া প্রয়োজন।"
-                )
-            else:
-                st.warning(
-                    "Both AI models agree on the visible condition, "
-                    "but crop identification needs further verification."
-                )
-
-        elif status == "model_agreement":
-
-            if is_bn:
-                st.success(
-                    "দুটি AI মডেলের পূর্বাভাস একমত। "
-                    "তবুও বিশেষজ্ঞের পরামর্শ নেওয়া ভালো।"
-                )
-            else:
-                st.success(
-                    "Both AI models agree. "
-                    "Independent field verification is still recommended."
-                )
-
-        elif status == "model_disagreement":
-
-            if is_bn:
-                st.error(
-                    "AI মডেলগুলোর পূর্বাভাসে অমিল রয়েছে। "
-                    "কৃষি বিশেষজ্ঞের যাচাই প্রয়োজন।"
-                )
-            else:
-                st.error(
-                    "The AI models disagree. "
-                    "Agricultural expert verification is required."
-                )
-
-        elif status == "crop_mismatch":
-
-            if is_bn:
-                st.error(
-                    "নির্বাচিত ফসল এবং AI শনাক্তকরণে অমিল রয়েছে। "
-                    "ফসলের ধরন যাচাই করুন।"
-                )
-            else:
-                st.error(
-                    "The selected crop does not match the AI crop prediction. "
-                    "Please verify the crop."
-                )
-
-        elif needs_review:
-
-            if is_bn:
-                st.warning(
-                    "নির্ভরযোগ্য ফলাফল পাওয়া যায়নি। "
-                    "বিশেষজ্ঞের পরামর্শ নিন।"
-                )
-            else:
-                st.warning(
-                    "The result is uncertain. "
-                    "Please seek expert verification."
-                )
-
+        if is_bn:
+            st.markdown("## আপনার ফসলের স্বাস্থ্য প্রতিবেদন")
         else:
+            st.markdown("## Your plant health report")
 
-            if is_bn:
-                st.success(
-                    "দুটি AI মডেলের পূর্বাভাস একমত। "
-                    "তবুও ফলাফল নিশ্চিত রোগ নির্ণয় নয়।"
-                )
-            else:
-                st.info(
-                    "The models agree. Agreement is not proof of disease."
-                )
-
-
-        crop_col, status_col = st.columns(2)
-        with crop_col:
-            st.markdown('<div class="cg-result-label">SELECTED CROP</div>', unsafe_allow_html=True)
-            st.markdown(f"### {safe_text(report.get('selected_crop', '')).title()}")
-        with status_col:
-            st.markdown('<div class="cg-result-label">' + ("ফসলের অবস্থা" if is_bn else "CROP CHECK") + '</div>', unsafe_allow_html=True)
-            status_key = diagnosis.get("hybrid_status", "uncertain")
-            status_labels = {
-                "disease_agreement_crop_uncertain": "ফসল যাচাই প্রয়োজন" if is_bn else "Crop verification needed",
-                "model_agreement": "মডেলগুলোর ফল মিলেছে" if is_bn else "Models agree",
-                "model_disagreement": "ফলাফলে অমিল" if is_bn else "Conflicting results",
-                "crop_mismatch": "ফসলের ধরন মিলছে না" if is_bn else "Crop does not match",
-            }
-            display_status = status_labels.get(
-                status_key,
-                "যাচাই প্রয়োজন" if is_bn else "Needs checking",
-            )
-            st.markdown(f"### {display_status}")
-
-
-        st.markdown("### What the photo check found" if not is_bn else "### ছবিতে যা দেখা গেছে")
-        predictions = diagnosis.get("model_predictions", [])
-
-        if predictions:
-            prediction_cols = st.columns(min(len(predictions), 2))
-            for index, prediction in enumerate(predictions):
-                with prediction_cols[index % len(prediction_cols)]:
-                    show_prediction(prediction)
+        if status == "crop_mismatch":
+            st.error("ছবির ফসলটি আপনার নির্বাচিত ফসলের সঙ্গে মিলছে না। সঠিক ফসল নির্বাচন করে পরিষ্কার ছবি দিন।" if is_bn else
+                     "The plant in the photo may not match the crop you selected. Please check the crop and upload a clear photo.")
+        elif healthy_only and not needs_review:
+            st.success("ছবিতে রোগের স্পষ্ট লক্ষণ পাওয়া যায়নি। গাছ পর্যবেক্ষণ চালিয়ে যান।" if is_bn else
+                       "No clear disease symptoms were identified in this photo. Keep monitoring the plant.")
+        elif same_disease and status == "model_agreement":
+            st.warning((f"সম্ভাব্য সমস্যা: {_friendly_disease(disease_names[0])}. এটি নিশ্চিত রোগ নির্ণয় নয়।" if is_bn else
+                        f"Possible problem: {_friendly_disease(disease_names[0])}. This is not a confirmed diagnosis."))
         else:
-            st.info("No model predictions are available.")
+            st.warning("ছবি থেকে সমস্যাটি নিশ্চিতভাবে বোঝা যায়নি। নতুন পরিষ্কার ছবি তুলুন অথবা কৃষি কর্মকর্তার পরামর্শ নিন।" if is_bn else
+                       "We could not identify the problem confidently from this photo. Try a clearer photo or ask an agricultural officer.")
 
-        # Agricultural knowledge
-        st.markdown("### Helpful crop information" if not is_bn else "### ফসল সম্পর্কে সহায়ক তথ্য")
-        retrievals = diagnosis.get("knowledge_retrieval", [])
-        found_knowledge = False
+        if same_disease and status == "model_agreement":
+            st.markdown("### " + ("এটি কেন হতে পারে" if is_bn else "What may be causing it"))
+            st.write("পাতার লক্ষণ এই সমস্যার সঙ্গে মিলে যেতে পারে। আবহাওয়া, গাছের অবস্থা এবং মাঠের অন্যান্য লক্ষণও বিবেচনা করা প্রয়োজন।" if is_bn else
+                     "The leaf symptoms are consistent with this condition. Weather, plant condition and symptoms on other leaves also matter.")
+        elif healthy_only:
+            st.markdown("### " + ("এখন কী করবেন" if is_bn else "What to do now"))
+            st.write("গাছ নিয়মিত দেখুন। নতুন দাগ, হলদে ভাব বা পাতা শুকিয়ে যাওয়া দেখা দিলে আবার ছবি তুলুন।" if is_bn else
+                     "Keep checking the plant. If new spots, yellowing or drying appear, take another photo for review.")
 
-        for retrieval in retrievals:
-            for item in retrieval.get("knowledge", []):
-                found_knowledge = True
-                disease_name = retrieval.get("predicted_disease", "Disease")
-                source_name = item.get("source_name", "Agricultural source")
-                friendly_title = str(disease_name).replace("_", " ").title()
-                with st.expander(
-                    f"{friendly_title} · {('আরও জানুন' if is_bn else 'Learn more')}"
-                ):
-                    st.write(item.get("document", ""))
-                    source_url = item.get("source_url")
-                    if source_url:
-                        st.markdown(
-                            f"[মূল তথ্যসূত্র দেখুন]({source_url})" if is_bn
-                            else f"[Read the original information]({source_url})"
-                        )
+        # Only display source-backed knowledge as practical guidance when the
+        # existing RAG verification gate explicitly permits it.
+        retrievals = diagnosis.get("knowledge_retrieval", []) or []
+        verified_docs = []
+        if guidance_allowed:
+            seen_docs = set()
+            for retrieval in retrievals:
+                for item in retrieval.get("knowledge", []) or []:
+                    if item.get("verification_status") != "verified":
+                        continue
+                    document = str(item.get("document", "")).strip()
+                    url = str(item.get("source_url", "")).strip()
+                    key = (document.lower(), url.lower())
+                    if document and key not in seen_docs:
+                        seen_docs.add(key)
+                        verified_docs.append((document, url))
 
-        if not found_knowledge:
-            st.info(
-                "No disease-specific knowledge was retrieved."
-                if not is_bn else
-                "এই ফলাফলের জন্য নির্দিষ্ট রোগ-সংক্রান্ত তথ্য পাওয়া যায়নি।"
-            )
-
-        # Weather context: present as general crop guidance, never as image diagnosis.
-        st.markdown("### আবহাওয়া ও ফসল" if is_bn else "### Weather and your crop")
-        st.caption(
-            "এটি সাধারণ আবহাওয়ার তথ্য; ছবির রোগ নির্ণয় নয়।" if is_bn
-            else "This is general crop-weather information, not a diagnosis of the uploaded plant."
-        )
-        crop_alerts = weather.get("crop_weather_context", [])
-
-        if crop_alerts:
-            for alert in crop_alerts:
-                raw_level = alert.get("alert_level", "weather_context")
-                friendly_level = weather_assessment_label(raw_level, is_bn)
-                message = alert.get("message_bn", "") if is_bn else alert.get("message_en", "")
-                with st.container(border=True):
-                    st.markdown(f"**{friendly_level}**")
-                    if message:
-                        st.write(message)
+        st.markdown("### " + ("করণীয়" if is_bn else "What you can do"))
+        if verified_docs:
+            for document, url in verified_docs[:3]:
+                st.write(document)
+                if url:
+                    st.markdown((f"[তথ্যসূত্র দেখুন]({url})" if is_bn else f"[View source]({url})"))
         else:
-            st.info(
-                "এই মুহূর্তে এই ফসলের জন্য আলাদা আবহাওয়ার তথ্য নেই।" if is_bn
-                else "There is no separate weather note for this crop right now."
+            st.info("এই ফলাফলের ভিত্তিতে নিরাপদ ও যাচাইকৃত চিকিৎসা বা ওষুধের পরামর্শ দেওয়া যাচ্ছে না। স্থানীয় কৃষি কর্মকর্তার সঙ্গে কথা বলুন।" if is_bn else
+                    "We do not yet have verified treatment or medicine instructions for this result. Please ask a local agricultural officer before applying any pesticide or medicine.")
+
+        st.markdown("### " + ("আবহাওয়ার সংক্ষিপ্ত তথ্য" if is_bn else "Weather in your area"))
+        crop_alerts = weather.get("crop_weather_context", []) or []
+        useful_weather = []
+        for alert in crop_alerts:
+            message = alert.get("message_bn") if is_bn else alert.get("message_en")
+            if message:
+                useful_weather.append(str(message))
+        if useful_weather:
+            for message in dict.fromkeys(useful_weather):
+                st.write(message)
+        else:
+            st.caption("এই মুহূর্তে অতিরিক্ত আবহাওয়ার তথ্য নেই।" if is_bn else "No additional local weather note is available right now.")
+
+        st.info("এটি ছবির ভিত্তিতে প্রাথমিক সহায়তা, নিশ্চিত রোগ নির্ণয় নয়। সমস্যা বাড়লে বা ওষুধ ব্যবহারের আগে স্থানীয় কৃষি কর্মকর্তার পরামর্শ নিন।" if is_bn else
+                "This is an initial photo-based assessment, not a confirmed diagnosis. If the problem spreads, or before using a pesticide, consult a local agricultural officer.")
+
+        # Technical JSON remains available for support/debugging, but is not the primary farmer report.
+        with st.expander("কারিগরি প্রতিবেদন" if is_bn else "Technical report"):
+            st.download_button(
+                "JSON ডাউনলোড" if is_bn else "Download technical JSON",
+                data=json.dumps(report, indent=2, ensure_ascii=False),
+                file_name="crop_guardian_technical_report.json",
+                mime="application/json",
+                use_container_width=True,
             )
 
-        # Safety notice
-        st.markdown("### Important field notice" if not is_bn else "### গুরুত্বপূর্ণ সতর্কতা")
-        st.warning(
-            safety.get(
-                "disclaimer",
-                "Weather observations do not confirm disease infection.",
+        try:
+            pdf_bytes = build_diagnosis_pdf(report, language=language)
+            st.download_button(
+                "সহজ প্রতিবেদন ডাউনলোড করুন (PDF) ↓" if is_bn else "Download simple crop report (PDF) ↓",
+                data=pdf_bytes,
+                file_name=f"crop_guardian_{report.get('selected_crop', 'field')}_report.pdf",
+                mime="application/pdf",
+                use_container_width=True,
+                key="cg_current_report_pdf_simple",
             )
-        )
-
-        # Download report
-        st.download_button(
-            "Download field report ↓" if not is_bn else "রিপোর্ট ডাউনলোড করুন ↓",
-            data=json.dumps(report, indent=2, ensure_ascii=False),
-            file_name="crop_guardian_report.json",
-            mime="application/json",
-            use_container_width=True,
-        )
+        except Exception as pdf_error:
+            st.warning(("PDF তৈরি করা যায়নি: " if is_bn else "PDF could not be generated: ") + str(pdf_error))
 
 
 # =====================================================
@@ -987,6 +933,75 @@ elif page in ("02 · Weather", "02 · আবহাওয়া", "02 · Field intel
         weather_heading = "Recent weather observations"
         no_weather_text = "The weather report is not available yet. Please try again later."
         weather_note = "These observations provide general weather context. They do not confirm a plant disease."
+
+    # Farmer-selected field coordinates. NASA POWER returns gridded estimates, not farm sensors.
+    st.markdown("### " + ("জমির অবস্থান" if is_bn else "Your field location"))
+    location_file = BASE_DIR / "data" / "weather_location.json"
+    saved_location = load_json(location_file) or {}
+    default_lat = float(saved_location.get("latitude", 23.8103))
+    default_lon = float(saved_location.get("longitude", 90.4125))
+
+    with st.form("cg_field_location_form"):
+        loc_col1, loc_col2 = st.columns(2)
+        with loc_col1:
+            field_latitude = st.number_input(
+                "অক্ষাংশ (Latitude)" if is_bn else "Latitude",
+                min_value=20.5, max_value=26.8, value=max(20.5, min(26.8, default_lat)),
+                step=0.0001, format="%.4f"
+            )
+        with loc_col2:
+            field_longitude = st.number_input(
+                "দ্রাঘিমাংশ (Longitude)" if is_bn else "Longitude",
+                min_value=88.0, max_value=92.8, value=max(88.0, min(92.8, default_lon)),
+                step=0.0001, format="%.4f"
+            )
+        refresh_weather = st.form_submit_button(
+            "আবহাওয়া হালনাগাদ করুন" if is_bn else "Update weather for this location",
+            type="primary"
+        )
+
+    if refresh_weather:
+        try:
+            with st.spinner("NASA POWER থেকে আবহাওয়ার তথ্য আনা হচ্ছে..." if is_bn else "Fetching daily and hourly weather from NASA POWER..."):
+                import weather as daily_weather
+                import weather_hourly as hourly_weather
+                import bangladesh_weather_risk as risk_engine
+
+                # Fetch both datasets using exactly the same selected coordinates.
+                daily_payload = daily_weather.fetch_weather(
+                    field_latitude, field_longitude, *daily_weather.get_default_dates()
+                )
+                daily_records = daily_weather.process_weather(daily_payload)
+                if not daily_records:
+                    raise RuntimeError("NASA POWER returned no daily weather records.")
+                daily_weather.save_weather(daily_records, field_latitude, field_longitude)
+
+                hourly_payload, hourly_start, hourly_end = hourly_weather.fetch_hourly(
+                    field_latitude, field_longitude
+                )
+                hourly_records = hourly_weather.process_hourly(hourly_payload)
+                if not hourly_records:
+                    raise RuntimeError("NASA POWER returned no hourly weather records.")
+                hourly_weather.save_hourly(hourly_records)
+
+                risk_engine.main(field_latitude, field_longitude)
+
+                # Persist coordinates only after both weather feeds and screening succeed.
+                location_file.parent.mkdir(parents=True, exist_ok=True)
+                location_file.write_text(
+                    json.dumps({
+                        "latitude": float(field_latitude),
+                        "longitude": float(field_longitude),
+                        "source": "farmer_selected_field",
+                        "updated_at": __import__("datetime").datetime.now().isoformat(timespec="seconds"),
+                    }, indent=2),
+                    encoding="utf-8",
+                )
+
+            st.success("আবহাওয়া হালনাগাদ হয়েছে।" if is_bn else "Weather updated for the selected field location.")
+            st.rerun()
+        except Exception as exc:
+            st.error(("আবহাওয়া হালনাগাদ করা যায়নি: " if is_bn else "Could not update weather: ") + str(exc))
 
     weather_data = load_json(WEATHER_FILE)
     alert_data = load_json(ALERT_FILE)
@@ -1060,6 +1075,79 @@ elif page in ("02 · Weather", "02 · আবহাওয়া", "02 · Field intel
 # =====================================================
 # 8. ABOUT PAGE — SIMPLE EXPLANATION
 # =====================================================
+
+elif page in ("03 · History", "03 · ইতিহাস", "03 · Diagnosis History"):
+    if is_bn:
+        render_hero(
+            "আপনার আগের পরীক্ষা",
+            "রোগ পরীক্ষার ইতিহাস।",
+            "প্রতিবেদন ফিরে দেখুন।",
+            "আগে সংরক্ষিত ফসল পরীক্ষার প্রতিবেদন দেখুন এবং PDF ডাউনলোড করুন।",
+            symbol="▤",
+        )
+        st.markdown("### সংরক্ষিত পরীক্ষার তালিকা")
+    else:
+        render_hero(
+            "YOUR PREVIOUS EXAMINATIONS",
+            "Diagnosis history.",
+            "Reports in one place.",
+            "Review saved crop examinations and download a PDF copy of each report.",
+            symbol="▤",
+        )
+        st.markdown("### Saved examinations")
+
+    history_items = load_diagnosis_history(EVAL_DIR)
+    if not history_items:
+        st.info("এখনও কোনো প্রতিবেদন সংরক্ষিত হয়নি।" if is_bn else "No saved diagnosis reports were found yet.")
+    else:
+        crop_values = sorted({item["crop"] for item in history_items})
+        crop_filter_options = (["সব ফসল"] + crop_values) if is_bn else (["All crops"] + crop_values)
+        selected_filter = st.selectbox(
+            "ফসল বাছাই করুন" if is_bn else "Filter by crop",
+            crop_filter_options,
+            key="cg_history_crop_filter",
+        )
+        all_label = "সব ফসল" if is_bn else "All crops"
+        filtered_items = history_items if selected_filter in (all_label, "All crops") else [
+            item for item in history_items if item["crop"] == selected_filter
+        ]
+        st.caption(
+            f"মোট প্রতিবেদন: {len(filtered_items)}" if is_bn
+            else f"Reports found: {len(filtered_items)}"
+        )
+        for index, item in enumerate(filtered_items):
+            report_data = item["report"]
+            status_text = item["status"].replace("_", " ").title()
+            date_text = item["modified"].strftime("%Y-%m-%d %H:%M")
+            title_text = f"{item['crop'].title()} · {item['image']}"
+            with st.expander(f"{title_text} — {date_text}", expanded=(index == 0)):
+                st.write(("অবস্থা: " if is_bn else "Status: ") + status_text)
+                st.write(("বিশেষজ্ঞ যাচাই প্রয়োজন: " if is_bn else "Expert review required: ") + ("হ্যাঁ" if item["needs_review"] and is_bn else "না" if is_bn else "Yes" if item["needs_review"] else "No"))
+                diag = report_data.get("diagnosis", {}) or {}
+                predictions = diag.get("model_predictions", []) or []
+                if predictions:
+                    st.markdown("**" + ("AI পূর্বাভাস" if is_bn else "AI findings") + "**")
+                    st.dataframe([
+                        {
+                            "মডেল" if is_bn else "Model": p.get("source_model", "Unknown"),
+                            "ফসল" if is_bn else "Crop": p.get("crop", "Unknown"),
+                            "ফলাফল" if is_bn else "Finding": p.get("disease", "Unknown"),
+                            "AI score" : p.get("model_score", p.get("confidence")),
+                        } for p in predictions
+                    ], use_container_width=True, hide_index=True)
+                try:
+                    pdf_data = build_diagnosis_pdf(report_data, language=language)
+                    st.download_button(
+                        "PDF ডাউনলোড করুন" if is_bn else "Download this PDF",
+                        data=pdf_data,
+                        file_name=f"crop_guardian_{item['crop']}_{index + 1}.pdf",
+                        mime="application/pdf",
+                        key=f"cg_history_pdf_{item['path'].name}",
+                    )
+                except Exception as pdf_error:
+                    st.error(("PDF তৈরি করা যায়নি: " if is_bn else "PDF generation failed: ") + str(pdf_error))
+                with st.expander("সম্পূর্ণ JSON প্রতিবেদন" if is_bn else "View complete JSON report"):
+                    st.json(report_data)
 
 elif page in ("03 · How it helps", "03 · আমাদের সম্পর্কে", "03 · About"):
     if is_bn:

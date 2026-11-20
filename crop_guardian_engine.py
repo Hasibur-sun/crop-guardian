@@ -1,5 +1,6 @@
 
 import json
+import re
 from pathlib import Path
 
 from hybrid_rag import diagnose_with_knowledge
@@ -137,7 +138,10 @@ def match_weather(
 
 def run_crop_guardian(
     image_path,
-    selected_crop
+    selected_crop,
+    original_filename=None,
+    field_coordinates=None,
+    save_report=True,
 ):
 
     selected_crop = selected_crop.lower().strip()
@@ -160,6 +164,26 @@ def run_crop_guardian(
         raise TypeError(
             "Hybrid diagnosis did not return a dictionary."
         )
+
+    # Store the user-facing original filename, not the temporary processing filename.
+    report_image_name = Path(original_filename).name if original_filename else Path(image_path).name
+    diagnosis["image"] = report_image_name
+
+    # Validate and normalize optional farmer-selected coordinates.
+    normalized_coordinates = None
+    if field_coordinates:
+        try:
+            latitude = float(field_coordinates["latitude"])
+            longitude = float(field_coordinates["longitude"])
+            if not (-90 <= latitude <= 90 and -180 <= longitude <= 180):
+                raise ValueError("Field coordinates are outside valid geographic ranges.")
+            normalized_coordinates = {
+                "latitude": latitude,
+                "longitude": longitude,
+                "source": str(field_coordinates.get("source", "farmer_selected_field")),
+            }
+        except (KeyError, TypeError, ValueError) as exc:
+            raise ValueError(f"Invalid field coordinates: {exc}") from exc
 
     # --------------------------------------
     # B. LOAD WEATHER ALERTS
@@ -205,8 +229,13 @@ def run_crop_guardian(
                 "data_source"
             ),
 
-            "location": weather_data.get(
-                "location"
+            "location": (
+                {
+                    **(weather_data.get("location") or {}),
+                    **normalized_coordinates,
+                }
+                if normalized_coordinates
+                else weather_data.get("location")
             ),
 
             "crop_weather_context": (
@@ -242,12 +271,15 @@ def run_crop_guardian(
             ),
 
             "disclaimer": (
-                "Weather indicators do not confirm disease "
-                "infection. NASA POWER provides gridded "
-                "weather estimates. The configured Dhaka "
-                "coordinates may not represent the farmer's "
-                "actual field. Consult an agricultural officer "
-                "when symptoms or uncertainty are present."
+                "Weather indicators do not confirm disease infection. "
+                "NASA POWER provides gridded weather estimates, not direct farm measurements. "
+                + (
+                    "The coordinates were supplied as the farmer-selected field location; "
+                    "they have not been independently verified. "
+                    if normalized_coordinates and normalized_coordinates.get("source") == "farmer_selected_field"
+                    else "Default Dhaka coordinates are being used and may not represent the farmer's actual field. "
+                )
+                + "Consult an agricultural officer when symptoms or uncertainty are present."
             )
         }
     }
@@ -256,28 +288,38 @@ def run_crop_guardian(
     # E. SAVE REPORT
     # --------------------------------------
 
-    OUTPUT_DIR.mkdir(
-        parents=True,
-        exist_ok=True
-    )
 
-    report_file = (
-    OUTPUT_DIR /
-    f"{Path(image_path).stem}_{selected_crop}_report.json"
-)
+    report_file = None
 
-    with open(
-    report_file,
-    "w",
-    encoding="utf-8"
-) as f:
-
-        json.dump(
-            final_report,
-            f,
-            indent=2,
-            ensure_ascii=False
+    if save_report:
+        OUTPUT_DIR.mkdir(
+            parents=True,
+            exist_ok=True
         )
+
+        report_stem = Path(report_image_name).stem
+        safe_stem = re.sub(
+            r"[^A-Za-z0-9._-]+",
+            "_",
+            report_stem
+        ).strip("._") or "crop_image"
+
+        report_file = (
+            OUTPUT_DIR /
+            f"{safe_stem}_{selected_crop}_report.json"
+        )
+
+        with open(
+            report_file,
+            "w",
+            encoding="utf-8"
+        ) as f:
+            json.dump(
+                final_report,
+                f,
+                indent=2,
+                ensure_ascii=False
+            )
 
     # --------------------------------------
     # F. DISPLAY SUMMARY
@@ -387,11 +429,12 @@ def run_crop_guardian(
     # J. FINAL OUTPUT
     # --------------------------------------
 
-    print("\nFinal report saved:")
-
-    print(report_file)
-
-    print("\n======================================")
+    if report_file:
+        print("\nFinal report saved:")
+        print(report_file)
+    else:
+     print("\nReport saving delegated to API.")
+     print("\n======================================")
 
     return final_report
 

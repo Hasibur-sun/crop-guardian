@@ -119,14 +119,38 @@ def classify(path: str, selected_crop: str = None) -> dict:
             "model_score": round(score.item(), 4)
         })
 
-    global_crop = global_predictions[0]["crop"]
+    # Determine crop using combined probability across all disease classes.
+    crop_probability_mass = {
+        crop: sum(
+            probabilities[i].item()
+            for i, class_name in enumerate(CLASSES)
+            if class_name.split("___", 1)[0].lower() == crop
+        )
+        for crop in SUPPORTED_CROPS
+    }
+
+    ranked_crops = sorted(
+        crop_probability_mass.items(),
+        key=lambda item: item[1],
+        reverse=True
+    )
+
+    global_crop = ranked_crops[0][0]
+
+    crop_margin = ranked_crops[0][1] - ranked_crops[1][1]
+
 
     result = {
         "model": "EfficientNet-B0",
         "device": str(DEVICE),
         "selected_crop": selected_crop,
         "global_top3": global_predictions,
-        "global_top_crop": global_crop
+        "global_top_crop": global_crop,
+        "crop_probability_mass": {
+            crop: round(score, 4)
+            for crop, score in crop_probability_mass.items()
+        },
+        "global_crop_margin": round(crop_margin, 4)
     }
 
     # No crop selected: return global predictions

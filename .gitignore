@@ -1,25 +1,209 @@
 
-# Python virtual environment
+# ==================================================
+# CROP GUARDIAN - PRODUCTION GITIGNORE
+# ==================================================
+
+
+# --------------------------------------------------
+# 1. PYTHON ENVIRONMENTS
+# --------------------------------------------------
+
 venv/
 .venv/
-__pycache__/
-*.pyc
+.venv_deploy/
+env/
+ENV/
 
-# API keys and secrets
+__pycache__/
+*.py[cod]
+*$py.class
+.python-version
+
+
+# --------------------------------------------------
+# 2. ENVIRONMENT FILES AND API SECRETS
+# --------------------------------------------------
+
 .env
 .env.*
+!.env.example
 
-# Cache files
-cache/
+# Private credentials
+secrets/
+credentials/
+*.pem
+*.key
+service-account*.json
 
-# ChromaDB generated database
-knowledge/chroma_db/
 
-# VS Code settings
-.vscode/
+# --------------------------------------------------
+# 3. PYTHON CACHE AND BUILD FILES
+# --------------------------------------------------
 
-# Temporary files
-*.log
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.pyre/
+.coverage
+htmlcov/
 
-# Test images (keep locally)
+dist/
+build/
+*.egg-info/
+
+
+# --------------------------------------------------
+# 4. FRONTEND DEPENDENCIES AND BUILDS
+# --------------------------------------------------
+
+node_modules/
+**/node_modules/
+
+**/dist/
+**/build/
+
+.vite/
+.vercel/
+.netlify/
+
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+
+# --------------------------------------------------
+# 5. FARMER-UPLOADED IMAGES AND PRIVATE FILES
+# --------------------------------------------------
+
+data/diagnosis_images/
+data/uploads/
+
+uploads/
 test_images/
+private_uploads/
+
+farmer_photos/
+user_uploads/
+
+
+# --------------------------------------------------
+# 6. PRIVATE DIAGNOSIS REPORTS
+# --------------------------------------------------
+
+eval/*_report.json
+eval/tmp*_report.json
+eval/Screenshot*_report.json
+
+reports/
+generated_reports/
+
+data/weather_location.json
+
+
+# --------------------------------------------------
+# 7. EXTERNAL DATASETS
+# --------------------------------------------------
+
+data/external/
+datasets/
+external_datasets/
+
+*.parquet
+
+
+# --------------------------------------------------
+# 8. CHROMADB AND GENERATED DATABASES
+# --------------------------------------------------
+
+knowledge/chroma_db/
+data/chroma_db/
+chroma_db/
+
+*.sqlite
+*.sqlite3
+*.db
+
+
+# --------------------------------------------------
+# 9. CACHE AND LOG FILES
+# --------------------------------------------------
+
+cache/
+logs/
+
+*.log
+*.tmp
+*.temp
+
+
+# --------------------------------------------------
+# 10. BACKUPS AND TEMPORARY ARCHIVES
+# --------------------------------------------------
+
+backups/
+backup/
+
+*.bak
+*.old
+*.backup
+*.backup.*
+
+*.zip
+
+*_full.txt
+*_source.txt
+
+
+# --------------------------------------------------
+# 11. EXPERIMENTAL OUTPUTS
+# --------------------------------------------------
+
+experiments/
+experiment_outputs/
+training_outputs/
+
+*.checkpoint
+
+
+# --------------------------------------------------
+# 12. LOCAL GENERATED DOCUMENTS
+# --------------------------------------------------
+
+*.pdf
+*.docx
+*.xlsx
+
+# Allow official project documentation
+!docs/*.pdf
+
+
+# --------------------------------------------------
+# 13. EDITOR AND OPERATING SYSTEM FILES
+# --------------------------------------------------
+
+.vscode/
+.idea/
+
+.DS_Store
+Thumbs.db
+desktop.ini
+*.lnk
+
+
+# --------------------------------------------------
+# 14. TEMPORARY PYTHON FILES
+# --------------------------------------------------
+
+*.pyc
+*.pyo
+__pycache__/
+
+
+# ==================================================
+# END OF CROP GUARDIAN GITIGNORE
+# ==================================================
+
+eval/potato_late_blight_screen.json
+
+eval/potato_late_blight_screen.json

@@ -731,7 +731,17 @@ def screen_rice(daily_records):
 # 9. RUN ALL SCREENING MODULES
 # ==========================================
 
-def main():
+def main(latitude=None, longitude=None):
+
+    location_file = BASE_DIR / "data" / "weather_location.json"
+    if latitude is None or longitude is None:
+        if location_file.exists():
+            with open(location_file, "r", encoding="utf-8") as location_handle:
+                saved_location = json.load(location_handle)
+            latitude = saved_location.get("latitude", 23.8103)
+            longitude = saved_location.get("longitude", 90.4125)
+        else:
+            latitude, longitude = 23.8103, 90.4125
 
     print("\n========== BANGLADESH WEATHER ENGINE ==========")
 
@@ -769,11 +779,12 @@ def main():
 
         "location": {
 
-            "latitude": 23.8103,
+            "latitude": float(latitude),
 
-            "longitude": 90.4125,
+            "longitude": float(longitude),
 
-            "timezone": "Asia/Dhaka"
+            "timezone": "Asia/Dhaka",
+            "source": "default_dhaka" if (float(latitude), float(longitude)) == (23.8103, 90.4125) else "farmer_selected"
         },
 
         "data_source": "NASA POWER",

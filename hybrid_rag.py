@@ -156,6 +156,10 @@ def diagnose_with_knowledge(
             "status", "uncertain"
         ),
 
+        "image_validation": hybrid_result.get(
+            "image_validation", {}
+        ),
+
         "crop_agreement": hybrid_result.get(
             "crop_agreement"
         ),
@@ -183,10 +187,16 @@ def diagnose_with_knowledge(
 
     if not candidates:
 
+        validation = result.get("image_validation", {})
+        validation_reason = validation.get("reason")
+
+        result["farmer_guidance_allowed"] = False
+        result["needs_review"] = True
         result["final_message"] = (
-            "No reliable disease prediction is available. "
-            "Please upload a clearer photograph or seek "
-            "advice from an agriculture officer."
+            validation_reason
+            or "No reliable disease prediction is available. "
+               "Please upload a clear crop-leaf photograph or seek "
+               "advice from an agriculture officer."
         )
 
         return result
